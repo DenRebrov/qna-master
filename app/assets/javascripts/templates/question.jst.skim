@@ -1,0 +1,7 @@
+li
+  p
+    a href='/questions/#{@question['id']}'
+      p #{@question['title']}
+
+  p
+    p #{@question['body']}

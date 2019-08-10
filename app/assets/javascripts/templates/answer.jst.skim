@@ -1,0 +1,24 @@
+div class="answer_#{@answer.id}"
+  - if @answer.best == true
+    b '(BEST Answer)'
+
+  - if gon.user_id && (@answer.best == false)
+    a href="answers/{@answer.id}/best" data-method="patch" data-remote="true" data-answer_id-#{@answer.id} class="best-answer-link" Make the best
+
+  p #{@answer['body']}
+
+  .answer_votes
+    - if gon.user_id && !(gon.user_id == @answer.user_id)
+      .answer_like_dislike
+        a href="/answers/#{@answer.id}/like" data-method="post" data-remote="true" data-type="json" Like!
+        a href="/answers/#{@answer.id}/dislike" data-method="post" data-remote="true" data-type="json" Dislike...
+      div class="answer_rating_#{@answer.id}"
+        p Rating:
+        b @rating
+
+  .answer_links
+    - if @links.length
+      p Links:
+      ul
+        - @links.forEach (link) ->
+            a href="#{link.url}" link.name

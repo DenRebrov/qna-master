@@ -1,0 +1,6 @@
+<% if @comment&.errors.present? %>
+errors = $('form#edit-comment-<%= @comment.id %>').find('.errors');
+errors.html('<%= j render partial: 'shared/errors', locals: { model: @comment } %>');
+<% else %>
+$('.comment_<%= @comment.id %>').html('<%= j render @comment %>');
+<% end %>

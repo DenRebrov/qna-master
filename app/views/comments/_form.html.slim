@@ -1,0 +1,10 @@
+- resource_type = resource.class.name.underscore
+
+= form_with model: [resource, resource.comments.new], remote: true,
+        class: 'new_comment',
+        id: "new-comment-#{resource_type}-#{resource.id}"do |f|
+  span.errors
+  p= f.label :body, 'Comment'
+  p= f.text_area :body, class: 'new_comment_text_area'
+  p= f.submit 'Comment'
+  = link_to 'Hide', '', class: 'hide-comment-link', data: { resource_id: resource.id, resource_type: resource_type }

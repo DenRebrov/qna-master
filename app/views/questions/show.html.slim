@@ -1,0 +1,39 @@
+.questions
+  = render @question
+
+.question_comments
+  - if user_signed_in?
+    = link_to 'Add comment', '', class: 'add-comment-link', data: {resource_id: @question.id, resource_type: 'question'}
+    = render 'comments/form', resource: @question
+
+  - if @question.comments.size > 1
+    h4= 'Comments:'
+    = render @question.comments
+
+hr
+h2= 'Answers list'
+
+.answers
+  = render @question.answers.order('answers.best DESC')
+
+b= 'New answer'
+.answer-errors
+  = render partial: 'shared/errors', locals: { resource: @answer }
+
+.answer-form
+  = form_with model: [@question, @answer], class: 'new-answer', data: { type: :json } do |f|
+    p
+      = f.label :body, 'Answer Body'
+      = f.text_area :body
+    p
+      = f.label :files
+      = f.file_field :files, multiple: true
+
+    h3 Links:
+    p
+      = f.fields_for :links do |l|
+      = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'
+
+    p= f.submit 'Create Answer'
+
+= link_to 'Back', questions_path

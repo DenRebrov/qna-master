@@ -1,0 +1,63 @@
+- if answer.persisted?
+  div class="answer_#{answer.id}"
+    p= answer.body
+
+    .answer_votes
+      - if current_user && !current_user.author_of?(answer)
+        .answer_like_dislike
+          => link_to 'Like!', polymorphic_path(answer, action: :like), method: :post, remote: true, data: { type: :json }
+          => link_to 'Dislike...', polymorphic_path(answer, action: :dislike), method: :post, remote: true, data: { type: :json }
+        div class="answer_rating_#{answer.id}"
+          b= answer.rating
+
+    .answer_files
+      - if answer.files.attached?
+        - answer.files.each do |file|
+          p= link_to file.filename.to_s, url_for(file)
+          - if current_user&.author_of?(answer)
+            p= link_to 'X', attachment_path(file), method: :delete, data: {confirm: 'Вы уверены?'}
+
+    .answer_links
+      - unless answer.links.empty?
+        p Links:
+        ul
+          - answer.links.each do |link|
+            li= link_to link.name, link.url
+            - if current_user&.author_of?(answer)
+              p= link_to 'X', link_path(link), method: :delete
+
+    - if answer.best?
+      b= '(BEST Answer)'
+
+    - if current_user&.author_of?(answer.question) && !answer.best?
+      p= link_to 'Make the best', best_answer_path(answer), method: :patch, remote: true, class: 'best-answer-link', data: { answer_id: answer.id }
+
+    - if current_user&.author_of?(answer)
+      p= link_to 'Edit Answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+
+      div class="error_answer_#{answer.id}"
+
+      = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+        p
+          = f.label :body, 'Your answer'
+          = f.text_area :body
+        p
+          = f.label :files
+          = f.file_field :files, multiple: true, direct_upload: true
+
+        h3 Links:
+        p
+          = f.fields_for :links do |l|
+          = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'
+
+        p= f.submit 'Save Answer'
+
+      p= link_to 'Delete Answer', answer_path(answer), method: :delete, remote: true
+
+    .answer_comments
+      - if user_signed_in?
+        => link_to 'Add comment', '', class: 'add-comment-link', data: {resource_id: answer.id, resource_type: 'answer'}
+        = render 'comments/form', resource: answer
+      - if answer.comments.size > 1
+        h4= 'Comments:'
+        = render answer.comments

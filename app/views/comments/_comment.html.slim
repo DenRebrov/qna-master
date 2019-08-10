@@ -1,0 +1,11 @@
+- if comment.persisted?
+  div class="comment_#{comment.id}"
+    p= comment.body
+    - if current_user&.author_of?(comment)
+      => link_to 'Edit', '', class: 'edit-comment-link', data: {comment_id: comment.id}
+      = form_for comment, remote: true, html: {id: "edit-comment-#{comment.id}"} do |f|
+        span.errors
+        p= f.label :body, 'Comment'
+        p= f.text_area :body, class: 'edit_comment_text_area'
+        p= f.submit 'Save'
+      = link_to 'Delete', comment_path(comment), method: :delete, remote: true, data: {confirm: 'Are you sure?'}
