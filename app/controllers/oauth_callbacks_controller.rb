@@ -3,9 +3,9 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
     sign_in_with('GitHub')
   end
 
-  # def vkontakte
-  #   sign_in_with('Vkontakte')
-  # end
+  def vkontakte
+    sign_in_with('Vkontakte')
+  end
 
   private
 
