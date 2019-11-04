@@ -1,7 +1,6 @@
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:github, :vkontakte]
+  devise :database_authenticatable, :registerable, #:confirmable,
+         :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:github, :vkontakte]
 
   has_many :questions
   has_many :answers
