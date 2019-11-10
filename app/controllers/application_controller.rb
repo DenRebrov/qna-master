@@ -1,11 +1,15 @@
 class ApplicationController < ActionController::Base
+  include Pundit
+
   before_action :gon_user
 
   helper_method :gon_user
 
-  # rescue_from CanCan::AccessDenied do |exception|
-  #   redirect_to root_url, alert: exception.message
-  # end
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, alert: exception.message
+  end
+
+  # check_authorization
 
   private
 

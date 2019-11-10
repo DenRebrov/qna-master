@@ -6,19 +6,18 @@ class QuestionsController < ApplicationController
 
   after_action :publish_question, only: [:create]
 
+  authorize_resource
+
   def index
-    # authorize! :read, Question
     @questions = Question.all
   end
 
   def show
-    # authorize! :read, @question
     @answer = @question.answers.new
     @answer.links.new
   end
 
   def new
-    # authorize! :create, Question
     @question = Question.new
     @question.links.new
     @question.build_reward
@@ -39,8 +38,6 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    # authorize! :destroy, Question
-
     if current_user.author_of?(@question)
       @question.destroy
       redirect_to questions_path, notice: 'Your question succesfully deleted.'
