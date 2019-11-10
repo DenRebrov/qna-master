@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::Base
-  include Pundit
-
   before_action :gon_user
 
   helper_method :gon_user
@@ -9,7 +7,7 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, alert: exception.message
   end
 
-  # check_authorization
+  check_authorization unless: :devise_controller?
 
   private
 
