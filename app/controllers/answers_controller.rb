@@ -7,6 +7,8 @@ class AnswersController < ApplicationController
 
   after_action :publish_answer, only: [:create]
 
+  authorize_resource
+
   def edit; end
 
   def create
