@@ -26,7 +26,7 @@ div class="question_#{question.id}"
           - if current_user&.author_of?(question)
             p= link_to 'X', link_path(link), method: :delete
 
-  - if current_user&.author_of?(question)
+  - if can? :update, question
     p= link_to 'Edit question', '#', class: 'edit-question-link', data: { question_id: question.id }
 
     div class="error_question_#{question.id}"

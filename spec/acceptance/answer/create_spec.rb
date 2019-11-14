@@ -48,10 +48,8 @@ feature 'User can write answer for the question', %q{
   scenario 'Unauthenticated user tries to write an answer' do
     visit question_path(question)
 
-    fill_in 'Body', with: 'Answer Body Text'
-    click_on 'Create Answer'
-
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_content 'Body'
+    expect(page).to_not have_link 'Create Answer'
   end
 
   context 'multiple sessions' do

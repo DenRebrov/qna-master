@@ -25,8 +25,11 @@ class Ability
     guest_abilities
     can :create, [Question, Answer, Comment]
     can [:update, :destroy], [Question, Answer], user_id: user.id
-    can :best, Answer
+    can :best, Answer, best: false, question: { user_id: user.id }
+    can :destroy, Attachment, question: { user_id: user.id }
 
-    can [:add_like, :add_dislike], [Question, Answer]
+    can [:add_like, :add_dislike], [Question, Answer] do |votable|
+      !user.author_of?(votable) && !votable.votes.exists?(user_id: user.id)
+    end
   end
 end

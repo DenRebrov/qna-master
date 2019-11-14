@@ -29,10 +29,10 @@
     - if answer.best?
       b= '(BEST Answer)'
 
-    - if current_user&.author_of?(answer.question) && !answer.best?
+    - if can? :best, answer
       p= link_to 'Make the best', best_answer_path(answer), method: :patch, remote: true, class: 'best-answer-link', data: { answer_id: answer.id }
 
-    - if current_user&.author_of?(answer)
+    - if can? :update, answer
       p= link_to 'Edit Answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
       div class="error_answer_#{answer.id}"
