@@ -82,7 +82,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'User tries to update not his answer' do
-      before { sign_in(create(:user)) }
+      before { sign_in(another_user) }
 
       it 'does not change answer attributes' do
         old_body = answer.body
@@ -136,7 +136,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'User tries to delete not his answer' do
-      before { sign_in(create(:user)) }
+      before { sign_in(another_user) }
 
       it 'does not delete question' do
         expect { delete :destroy, params: { id: authored_answer }, format: :js }.to_not change(Answer, :count)

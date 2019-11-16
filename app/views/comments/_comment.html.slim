@@ -1,7 +1,7 @@
 - if comment.persisted?
   div class="comment_#{comment.id}"
     p= comment.body
-    - if current_user&.author_of?(comment)
+    - if can? :update, comment
       => link_to 'Edit', '', class: 'edit-comment-link', data: {comment_id: comment.id}
       = form_for comment, remote: true, html: {id: "edit-comment-#{comment.id}"} do |f|
         span.errors

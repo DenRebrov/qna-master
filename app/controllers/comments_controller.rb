@@ -4,6 +4,8 @@ class CommentsController < ApplicationController
   before_action :find_comment, only: %i[update destroy]
   after_action :publish_comment, only: :create
 
+  authorize_resource
+
   def create
     @comment = @resource.comments.new(comment_params)
     @comment.user = current_user
@@ -11,11 +13,11 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @comment.update(comment_params) if current_user.author_of?(@comment)
+    @comment.update(comment_params)
   end
 
   def destroy
-    @comment.destroy if current_user.author_of?(@comment)
+    @comment.destroy
   end
 
   private
