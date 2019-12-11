@@ -1,0 +1,8 @@
+.new_comment, .edit_comment { display: none; }
+
+.comment-border {
+    background-color: #00ffb2;
+    padding: 15px; /* Поля вокруг текста */
+    border-radius: 5px;
+    margin-bottom: 20px;
+}

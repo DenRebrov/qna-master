@@ -1,0 +1,6 @@
+.question-border {
+    background-color: #b4ffc0;
+    padding: 15px; /* Поля вокруг текста */
+    border-radius: 5px;
+    margin-bottom: 20px;
+}

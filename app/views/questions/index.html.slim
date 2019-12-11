@@ -3,8 +3,8 @@
 
 hr
 h2= 'List of questions'
-ul.questions-list
+.col-md-6
   - @questions.each do |question|
-    li
+    .question-border.text-L
       p= link_to question.title, question_path(question)
       p= question.body
