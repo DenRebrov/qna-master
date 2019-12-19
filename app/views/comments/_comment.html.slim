@@ -1,5 +1,5 @@
 - if comment.persisted?
-  div class="comment_#{comment.id}"
+  div class="comment_#{comment.id} comment-border"
     p= comment.body
     - if can? :update, comment
       => link_to 'Edit', '', class: 'edit-comment-link', data: {comment_id: comment.id}

@@ -1,0 +1,6 @@
+.answer-border {
+    background-color: #c5ffec;
+    padding: 15px; /* Поля вокруг текста */
+    border-radius: 5px;
+    margin-bottom: 20px;
+}

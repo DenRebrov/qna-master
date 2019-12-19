@@ -1,5 +1,5 @@
 - if answer.persisted?
-  div class="answer_#{answer.id}"
+  div class="answer_#{answer.id} answer-border"
     p= answer.body
 
     .answer_votes
@@ -30,7 +30,8 @@
       b= '(BEST Answer)'
 
     - if can? :best, answer
-      p= link_to 'Make the best', best_answer_path(answer), method: :patch, remote: true, class: 'best-answer-link', data: { answer_id: answer.id }
+      - unless answer.best?
+        p= link_to 'Make the best', best_answer_path(answer), method: :patch, remote: true, class: 'best-answer-link', data: { answer_id: answer.id }
 
     - if can? :update, answer
       p= link_to 'Edit Answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
