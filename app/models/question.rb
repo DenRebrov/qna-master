@@ -14,4 +14,12 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true, length: { maximum: 30 }
   validates :body, length: { maximum: 255 }
+
+  after_create :calculate_reputation
+
+  private
+
+  def calculate_reputation
+    ReputationJob.perform_later(self)
+  end
 end
