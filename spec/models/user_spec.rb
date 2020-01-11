@@ -7,12 +7,13 @@ RSpec.describe User, type: :model do
   it { should have_many(:votes) }
   it { should have_many(:comments) }
   it { should have_many(:authorizations).dependent(:destroy) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
 
   describe 'def author_of?' do
-    let(:author_user) { create(:user) }
     let(:user) { create(:user) }
+    let(:author_user) { create(:user) }
     let(:question) { create(:question, user: author_user) }
 
     it 'Returns true if question belongs to user' do
@@ -33,6 +34,20 @@ RSpec.describe User, type: :model do
       expect(Services::FindForOauth).to receive(:new).with(auth).and_return(service)
       expect(service).to receive(:call)
       User.find_for_oauth(auth)
+    end
+  end
+
+  describe '#subscribed?' do
+    let!(:user) { create(:user) }
+    let!(:another_user) { create(:user) }
+    let!(:subscription) { create(:subscription, user: user)}
+
+    it 'Returns true if user subscribed to question' do
+      expect(user).to be_subscribed(subscription.question)
+    end
+
+    it 'Returns false if user not subscribed to question' do
+      expect(another_user).to_not be_subscribed(subscription.question)
     end
   end
 end

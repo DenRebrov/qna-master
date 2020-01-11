@@ -2,6 +2,13 @@ div class="question_#{question.id} question-border"
   h3= question.title
   p= question.body
 
+  - if can?(:create, Subscription) || can?(:destroy, @subscription)
+    .subscription
+      - if current_user.subscribed?(@question)
+        = link_to 'Unsubscribe from the question', subscription_path(@subscription), method: :delete, remote: true, class: 'unsubscribe'
+      - else
+        = link_to 'Subscribe to the question', question_subscriptions_path(@question), method: :post, remote: true, class: 'subscribe'
+
   .question_votes
     - if current_user && !current_user.author_of?(question)
       .question_like_dislike

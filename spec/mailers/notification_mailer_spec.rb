@@ -1,8 +1,10 @@
 require "rails_helper"
 
-RSpec.describe DailyDigestMailer, type: :mailer do
-  describe "digest" do
-    let(:mail) { DailyDigestMailer.digest }
+RSpec.describe NewAnswerMailer, type: :mailer do
+  describe "new_answer" do
+    let(:user) { create(:user) }
+    let(:answer) { create(:answer) }
+    let(:mail) { NewAnswerMailer.new_answer(user, answer) }
 
     it "renders the headers" do
       expect(mail.subject).to eq("Digest")
@@ -10,9 +12,8 @@ RSpec.describe DailyDigestMailer, type: :mailer do
       expect(mail.from).to eq(["from@example.com"])
     end
 
-    it "renders the body" do
+    it "renders the answer body" do
       expect(mail.body.encoded).to match(answer.body)
     end
   end
-
 end
