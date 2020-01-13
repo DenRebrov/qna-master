@@ -15,12 +15,7 @@ class User < ApplicationRecord
   end
 
   def subscribed?(question)
-    result = nil
-
-    self.subscriptions.find_each do |subscription|
-      subscription.question == question ? result = true : result = false
-    end
-    result
+    self.subscriptions.exists?(question: question)
   end
 
   def self.find_for_oauth(auth)
