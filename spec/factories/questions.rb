@@ -2,9 +2,10 @@ FactoryBot.define do
   factory :question do
     title { "MyString" }
     body { "MyText" }
+    user
 
     trait :with_reward do
-      reward { create(:reward) }
+      reward { create(:reward, user: user) }
     end
 
     trait :with_file do

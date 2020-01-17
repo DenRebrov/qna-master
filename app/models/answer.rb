@@ -12,6 +12,9 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true, length: { maximum: 255 }
 
+  after_save :deliver_new_answer_notification
+  # after_save :dsgsgd
+
   def set_best
     best_answer = question.answers.find_by(best: true)
 
@@ -21,4 +24,12 @@ class Answer < ApplicationRecord
       question.reward&.update!(user: user)
     end
   end
+
+  def deliver_new_answer_notification
+    NewAnswerNotificationJob.perform_later(self)
+  end
+
+  # def dsgsgd
+  #   Subscription.create(user: answer.question.user, question: answer.question)
+  # end
 end
