@@ -1,0 +1,5 @@
+.search
+  = form_tag search_path, method: :get do
+    => text_field_tag :search_text, params[:search_text], placeholder: 'Search'
+    => select_tag :search_object, options_for_select(Search::SEARCH_OBJECTS, params[:search_object])
+    => submit_tag 'Search'
