@@ -28,7 +28,7 @@ feature 'Search' do
 
       within '.search' do
         fill_in 'search_text', with: 'search*'
-        select 'Question', from: 'search_object'
+        select 'Answer', from: 'search_object'
         click_on 'Search'
       end
 
@@ -44,7 +44,7 @@ feature 'Search' do
 
       within '.search' do
         fill_in 'search_text', with: 'search*'
-        select 'Question', from: 'search_object'
+        select 'Comment', from: 'search_object'
         click_on 'Search'
       end
 
@@ -60,7 +60,7 @@ feature 'Search' do
 
       within '.search' do
         fill_in 'search_text', with: 'search*'
-        select 'Question', from: 'search_object'
+        select 'User', from: 'search_object'
         click_on 'Search'
       end
 
