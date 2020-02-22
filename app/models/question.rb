@@ -13,7 +13,7 @@ class Question < ApplicationRecord
   accepts_nested_attributes_for :links, reject_if: :all_blank
   accepts_nested_attributes_for :reward, reject_if: :all_blank
 
-  validates :title, :body, presence: true, length: { maximum: 255 }
+  validates :title, :body, presence: true, length: { maximum: 30 }
   validates :body, length: { maximum: 255 }
 
   scope :for_the_last_day, -> { where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight) }
