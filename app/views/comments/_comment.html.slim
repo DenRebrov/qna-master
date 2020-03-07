@@ -1,6 +1,8 @@
 - if comment.persisted?
   div class="comment_#{comment.id} comment-border"
-    p= comment.body
+    - cache comment do
+      p= comment.body
+
     - if can? :update, comment
       => link_to 'Edit', '', class: 'edit-comment-link', data: {comment_id: comment.id}
       = form_for comment, remote: true, html: {id: "edit-comment-#{comment.id}"} do |f|

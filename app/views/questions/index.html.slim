@@ -4,7 +4,8 @@
 hr
 h2= 'List of questions'
 .col-md-6
-  - @questions.each do |question|
-    .question-border.text-L
-      p= link_to question.title, question_path(question)
-      p= question.body
+  - cache collection_cache_key_for :question do
+    - @questions.each do |question|
+      .question-border.text-L
+        p= link_to question.title, question_path(question)
+        p= question.body
