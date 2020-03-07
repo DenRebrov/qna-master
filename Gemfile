@@ -50,17 +50,27 @@ gem "cancancan"
 gem "doorkeeper", '>= 5.1.0'
 gem 'active_model_serializers', '~> 0.10'
 gem "oj"
-gem "sidekiq"
+gem "sidekiq", "< 6"
 gem 'sinatra', require: false
 gem 'whenever', require: false
 gem 'mysql2'
 gem 'thinking-sphinx'
+gem 'mini_racer'
+gem 'unicorn'
+gem 'redis-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 3.8'
   gem 'factory_bot_rails'
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-passenger', require: false
+  gem 'capistrano-sidekiq', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :development do
